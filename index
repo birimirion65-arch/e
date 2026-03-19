@@ -1,348 +1,327 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>抽選キャンペーン | LINE友だち追加</title>
-  <meta name="description" content="LINE友だち追加で抽選キャンペーンに参加。案内に沿ってエントリーしてください。">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>抽選キャンペーン</title>
+  <meta name="description" content="LINE追加で抽選キャンペーンに参加" />
   <style>
     * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
     body {
       margin: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic", "Noto Sans JP", sans-serif;
-      color: #fff;
+      font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic", sans-serif;
       background:
-        radial-gradient(circle at 10% 20%, rgba(34,197,94,.20), transparent 28%),
-        radial-gradient(circle at 85% 12%, rgba(59,130,246,.18), transparent 28%),
-        linear-gradient(135deg, #08111f 0%, #0f172a 48%, #111827 100%);
+        radial-gradient(circle at top left, rgba(34,197,94,.22), transparent 28%),
+        radial-gradient(circle at bottom right, rgba(59,130,246,.18), transparent 25%),
+        linear-gradient(135deg, #0b1220 0%, #111827 100%);
+      color: #fff;
     }
-    a { text-decoration: none; }
-    .container { width: min(1120px, calc(100% - 32px)); margin: 0 auto; }
-    .hero {
+
+    .wrap {
       min-height: 100vh;
       display: flex;
       align-items: center;
-      padding: 32px 0 48px;
-      position: relative;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .card {
+      width: 100%;
+      max-width: 980px;
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.12);
+      backdrop-filter: blur(14px);
+      border-radius: 28px;
+      box-shadow: 0 24px 80px rgba(0,0,0,.35);
       overflow: hidden;
     }
-    .hero-grid {
-      width: 100%;
+
+    .inner {
       display: grid;
-      grid-template-columns: 1.15fr .85fr;
-      gap: 28px;
-      align-items: center;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 20px;
+      padding: 34px;
     }
-    .glass {
-      background: rgba(255,255,255,.07);
-      border: 1px solid rgba(255,255,255,.12);
-      backdrop-filter: blur(16px);
-      box-shadow: 0 20px 80px rgba(0,0,0,.28);
-      border-radius: 28px;
-    }
-    .hero-copy { padding: 44px; }
-    .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      padding: 10px 14px;
+
+    .badge {
+      display: inline-block;
+      padding: 10px 16px;
       border-radius: 999px;
-      font-size: 12px;
-      letter-spacing: .12em;
-      font-weight: 800;
+      background: rgba(34,197,94,.15);
+      border: 1px solid rgba(34,197,94,.35);
       color: #bbf7d0;
-      background: rgba(34,197,94,.12);
-      border: 1px solid rgba(34,197,94,.28);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .12em;
     }
+
     h1 {
-      font-size: clamp(38px, 6vw, 78px);
-      line-height: 1.03;
-      letter-spacing: -.04em;
       margin: 18px 0 16px;
+      font-size: clamp(36px, 6vw, 68px);
+      line-height: 1.05;
+      letter-spacing: -.04em;
     }
+
     .lead {
-      margin: 0 0 28px;
-      color: rgba(255,255,255,.86);
-      font-size: clamp(16px, 2.2vw, 20px);
+      margin: 0 0 24px;
+      font-size: 17px;
       line-height: 1.9;
-      max-width: 760px;
+      color: rgba(255,255,255,.86);
     }
-    .accent { color: #86efac; font-weight: 800; }
-    .cta-row {
+
+    .accent {
+      color: #86efac;
+      font-weight: 800;
+    }
+
+    .actions {
       display: flex;
       flex-wrap: wrap;
       gap: 14px;
-      align-items: center;
+      margin-top: 18px;
     }
-    .btn-primary, .btn-secondary {
+
+    .btn {
+      appearance: none;
+      border: none;
+      cursor: pointer;
       min-height: 58px;
+      padding: 0 24px;
+      border-radius: 999px;
+      font-size: 16px;
+      font-weight: 800;
+      transition: .2s ease;
+      text-decoration: none;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      padding: 0 24px;
-      border-radius: 999px;
-      font-weight: 800;
-      transition: .2s ease;
     }
+
     .btn-primary {
-      color: #fff;
       background: linear-gradient(135deg, #22c55e, #16a34a);
+      color: #fff;
       box-shadow: 0 18px 36px rgba(34,197,94,.28);
     }
+
     .btn-secondary {
-      color: #fff;
-      background: rgba(255,255,255,.06);
+      background: rgba(255,255,255,.07);
       border: 1px solid rgba(255,255,255,.12);
+      color: #fff;
     }
-    .btn-primary:hover, .btn-secondary:hover { transform: translateY(-1px); opacity: .96; }
+
+    .btn:hover { transform: translateY(-1px); opacity: .96; }
+
     .note {
-      margin-top: 12px;
+      margin-top: 14px;
       font-size: 13px;
-      color: rgba(255,255,255,.58);
       line-height: 1.8;
+      color: rgba(255,255,255,.58);
     }
-    .side-panel { padding: 20px; }
-    .info-card {
-      padding: 24px;
+
+    .side {
+      display: grid;
+      gap: 14px;
+    }
+
+    .box {
+      padding: 22px;
       border-radius: 22px;
-      background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.04));
+      background: rgba(255,255,255,.05);
       border: 1px solid rgba(255,255,255,.08);
     }
-    .info-card + .info-card { margin-top: 14px; }
-    .info-card h3 { margin: 0 0 10px; font-size: 22px; }
-    .info-card p {
+
+    .box h3 {
+      margin: 0 0 10px;
+      font-size: 20px;
+    }
+
+    .box p {
       margin: 0;
-      color: rgba(255,255,255,.76);
-      line-height: 1.85;
       font-size: 14px;
+      line-height: 1.8;
+      color: rgba(255,255,255,.74);
     }
-    .section { padding: 24px 0 90px; }
-    .section-title {
-      margin: 0 0 12px;
-      font-size: clamp(28px, 4vw, 44px);
-      line-height: 1.12;
-      letter-spacing: -.03em;
+
+    .section {
+      padding: 0 34px 34px;
     }
-    .section-lead {
-      margin: 0 0 28px;
-      color: rgba(255,255,255,.72);
-      font-size: 16px;
-      line-height: 1.9;
-      max-width: 760px;
-    }
-    .steps, .features {
+
+    .flow {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 18px;
+      gap: 14px;
     }
-    .card {
-      padding: 24px;
-      border-radius: 24px;
+
+    .step {
+      padding: 22px;
+      border-radius: 22px;
       background: rgba(255,255,255,.05);
-      border: 1px solid rgba(255,255,255,.09);
+      border: 1px solid rgba(255,255,255,.08);
     }
+
     .step-no {
       font-size: 12px;
       font-weight: 800;
-      letter-spacing: .14em;
       color: #93c5fd;
+      letter-spacing: .14em;
       margin-bottom: 10px;
     }
-    .card h3, .card h4 { margin: 0 0 10px; }
-    .card p {
+
+    .step h4 {
+      margin: 0 0 10px;
+      font-size: 19px;
+    }
+
+    .step p {
       margin: 0;
       color: rgba(255,255,255,.74);
+      line-height: 1.8;
       font-size: 14px;
-      line-height: 1.85;
     }
-    .cta-block {
-      margin-top: 34px;
-      padding: 30px;
-      border-radius: 28px;
+
+    .bottom-cta {
+      margin-top: 26px;
+      padding: 28px;
       text-align: center;
+      border-radius: 24px;
       background:
         linear-gradient(135deg, rgba(34,197,94,.16), rgba(16,185,129,.08)),
-        rgba(255,255,255,.05);
-      border: 1px solid rgba(255,255,255,.1);
+        rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.08);
     }
-    .cta-block h3 {
-      margin: 0 0 12px;
-      font-size: clamp(26px, 3.4vw, 38px);
-      letter-spacing: -.03em;
+
+    .bottom-cta h3 {
+      margin: 0 0 10px;
+      font-size: clamp(24px, 4vw, 36px);
     }
-    .cta-block p {
-      margin: 0 auto 20px;
-      max-width: 720px;
-      line-height: 1.9;
+
+    .bottom-cta p {
+      margin: 0 0 20px;
       color: rgba(255,255,255,.78);
-    }
-    .faq { display: grid; gap: 14px; margin-top: 28px; }
-    .faq-item {
-      padding: 22px;
-      border-radius: 20px;
-      background: rgba(255,255,255,.05);
-      border: 1px solid rgba(255,255,255,.08);
-    }
-    .faq-item h4 { margin: 0 0 8px; font-size: 18px; }
-    .faq-item p {
-      margin: 0;
-      color: rgba(255,255,255,.72);
-      font-size: 14px;
-      line-height: 1.85;
-    }
-    footer { padding-bottom: 48px; }
-    .footer-box {
-      padding: 20px 22px;
-      border-radius: 20px;
-      background: rgba(255,255,255,.04);
-      border: 1px solid rgba(255,255,255,.08);
-      color: rgba(255,255,255,.55);
-      font-size: 12px;
       line-height: 1.9;
     }
-    .orb {
-      position: absolute;
-      border-radius: 50%;
-      pointer-events: none;
-      filter: blur(8px);
+
+    .loading {
+      display: none;
+      margin-top: 16px;
+      font-size: 14px;
+      color: #bbf7d0;
+      font-weight: 700;
     }
-    .orb-1 {
-      width: 180px; height: 180px; right: -40px; top: 48px;
-      background: radial-gradient(circle, rgba(34,197,94,.28), transparent 70%);
-    }
-    .orb-2 {
-      width: 220px; height: 220px; left: -50px; bottom: -20px;
-      background: radial-gradient(circle, rgba(59,130,246,.22), transparent 70%);
-    }
-    @media (max-width: 920px) {
-      .hero-grid, .steps, .features { grid-template-columns: 1fr; }
-      .hero-copy { padding: 30px 22px; }
-      .cta-row { flex-direction: column; align-items: stretch; }
-      .btn-primary, .btn-secondary { width: 100%; }
+
+    @media (max-width: 900px) {
+      .inner,
+      .flow {
+        grid-template-columns: 1fr;
+      }
+
+      .actions {
+        flex-direction: column;
+      }
+
+      .btn {
+        width: 100%;
+      }
+
+      .section,
+      .inner {
+        padding: 22px;
+      }
     }
   </style>
 </head>
 <body>
-  <section class="hero">
-    <div class="orb orb-1"></div>
-    <div class="orb orb-2"></div>
-    <div class="container hero-grid">
-      <div class="glass hero-copy">
-        <div class="eyebrow">LIMITED CAMPAIGN</div>
-        <h1>LINE追加で<br>抽選キャンペーンに参加</h1>
-        <p class="lead">
-          期間限定キャンペーンです。<span class="accent">LINEの友だち追加</span>後、
-          トーク画面の案内に沿って進めるだけで参加できます。
-          まずは下のボタンから追加してください。
-        </p>
-        <div class="cta-row">
-          <a class="btn-primary" href="https://lin.ee/UgmaEbq">LINEで友だち追加する</a>
-          <a class="btn-secondary" href="#flow">参加手順を見る</a>
+  <div class="wrap">
+    <div class="card">
+      <div class="inner">
+        <div>
+          <span class="badge">LIMITED CAMPAIGN</span>
+          <h1>LINE追加で<br>抽選キャンペーンに参加</h1>
+          <p class="lead">
+            <span class="accent">LINEの友だち追加</span>後、
+            案内に沿って進めるだけで参加できます。
+            下のボタンからそのまま進んでください。
+          </p>
+
+          <div class="actions">
+            <a class="btn btn-primary" href="https://lin.ee/UgmaEbq" target="_blank" rel="noopener noreferrer">
+              LINEで友だち追加する
+            </a>
+            <button class="btn btn-secondary" id="drawButton" type="button">
+              抽選結果を見る
+            </button>
+          </div>
+
+          <div class="loading" id="loadingText">結果ページへ移動しています...</div>
+
+          <div class="note">
+            友だち追加後、必要に応じてLINEトーク内の案内をご確認ください。
+          </div>
         </div>
-        <div class="note">
-          追加後はLINEのトーク画面で案内を確認できます。
+
+        <div class="side">
+          <div class="box">
+            <h3>簡単3ステップ</h3>
+            <p>友だち追加 → 案内確認 → 結果確認。スマホだけで完結します。</p>
+          </div>
+          <div class="box">
+            <h3>GitHub Pages対応</h3>
+            <p>外部CSSや外部JSなし。HTML2枚だけでそのまま公開できます。</p>
+          </div>
+          <div class="box">
+            <h3>遷移エラーを防止</h3>
+            <p><code>result.html</code> に相対パスで飛ばすので、GitHub Pagesでも動きやすい構成です。</p>
+          </div>
         </div>
       </div>
 
-      <div class="glass side-panel">
-        <div class="info-card">
-          <h3>参加は簡単</h3>
-          <p>友だち追加 → 案内確認 → エントリー完了。スマホだけでスムーズに進められます。</p>
+      <div class="section">
+        <div class="flow">
+          <div class="step">
+            <div class="step-no">STEP 01</div>
+            <h4>LINEを追加</h4>
+            <p>上のボタンからLINE追加を行います。</p>
+          </div>
+          <div class="step">
+            <div class="step-no">STEP 02</div>
+            <h4>案内を確認</h4>
+            <p>トーク画面に届く案内や運用情報を確認します。</p>
+          </div>
+          <div class="step">
+            <div class="step-no">STEP 03</div>
+            <h4>結果を確認</h4>
+            <p>このページの「抽選結果を見る」から結果ページへ移動します。</p>
+          </div>
         </div>
-        <div class="info-card">
-          <h3>離脱しにくい導線</h3>
-          <p>最初に必要な情報だけを見せ、ボタンからそのままLINEに遷移する構成です。</p>
-        </div>
-        <div class="info-card">
-          <h3>当選LPと連動</h3>
-          <p>当選者用ページもセットで使えるので、導線全体を揃えて運用できます。</p>
-        </div>
-      </div>
-    </div>
-  </section>
 
-  <section class="section" id="flow">
-    <div class="container">
-      <h2 class="section-title">参加の流れ</h2>
-      <p class="section-lead">
-        GitHub Pagesにそのまま置ける、シンプルかつ見栄えのする1ファイル構成です。
-        スマホ表示でも崩れにくいように調整しています。
-      </p>
-
-      <div class="steps">
-        <div class="card">
-          <div class="step-no">STEP 01</div>
-          <h3>友だち追加</h3>
-          <p>下のボタンから公式LINEを追加します。タップ後、そのままLINEへ遷移します。</p>
-        </div>
-        <div class="card">
-          <div class="step-no">STEP 02</div>
-          <h3>案内を確認</h3>
-          <p>追加後に届くメッセージを確認し、必要な内容や参加方法をチェックします。</p>
-        </div>
-        <div class="card">
-          <div class="step-no">STEP 03</div>
-          <h3>エントリー完了</h3>
-          <p>トーク内の案内に沿って進めることで抽選への参加が完了します。</p>
-        </div>
-      </div>
-
-      <h2 class="section-title" style="margin-top:56px;">このLPのポイント</h2>
-      <p class="section-lead">
-        単にボタンを置くだけでなく、ユーザーが不安なく押せるように情報設計を入れています。
-      </p>
-
-      <div class="features">
-        <div class="card">
-          <h4>視認性の高いファーストビュー</h4>
-          <p>何のページか、何をすればいいか、どこを押せばいいかが一目で伝わります。</p>
-        </div>
-        <div class="card">
-          <h4>スマホ前提の設計</h4>
-          <p>縦長画面でも読みやすく、ボタンが押しやすいサイズと余白にしています。</p>
-        </div>
-        <div class="card">
-          <h4>GitHub Pagesに最適</h4>
-          <p>CSSも画像依存も最小限にしたので、そのままアップロードして公開できます。</p>
-        </div>
-      </div>
-
-      <div class="cta-block">
-        <h3>今すぐ参加する</h3>
-        <p>
-          まずはLINEを追加して、トーク画面の案内をご確認ください。
-          下のボタンからそのまま進めます。
-        </p>
-        <div class="cta-row" style="justify-content:center;">
-          <a class="btn-primary" href="https://lin.ee/UgmaEbq">LINEで友だち追加する</a>
-        </div>
-      </div>
-
-      <div class="faq">
-        <div class="faq-item">
-          <h4>Q. 参加方法は難しいですか？</h4>
-          <p>A. 難しくありません。LINE追加後、トーク内の案内に沿って進めるだけです。</p>
-        </div>
-        <div class="faq-item">
-          <h4>Q. 当選結果はどこで確認しますか？</h4>
-          <p>A. 運用に応じて、LINEトークまたは別の当選LPで案内できます。</p>
-        </div>
-        <div class="faq-item">
-          <h4>Q. GitHubにどう置けばいいですか？</h4>
-          <p>A. このファイル名を index.html にしてリポジトリ直下へ置けば、GitHub Pagesで公開しやすいです。</p>
+        <div class="bottom-cta">
+          <h3>今すぐ参加する</h3>
+          <p>まずはLINE追加、その後に結果ページを確認してください。</p>
+          <div class="actions" style="justify-content:center;">
+            <a class="btn btn-primary" href="https://lin.ee/UgmaEbq" target="_blank" rel="noopener noreferrer">
+              LINEで友だち追加する
+            </a>
+            <button class="btn btn-secondary" id="drawButtonBottom" type="button">
+              抽選結果を見る
+            </button>
+          </div>
         </div>
       </div>
     </div>
-  </section>
+  </div>
 
-  <footer>
-    <div class="container">
-      <div class="footer-box">
-        ※ 本ページはキャンペーン参加用の案内ページです。<br>
-        ※ 実施内容・期間・参加条件などの詳細は運用側の案内に準じます。<br>
-        ※ 必要に応じて文言や注意書きはご自身の運用に合わせて調整してください。
-      </div>
-    </div>
-  </footer>
+  <script>
+    function goToResult() {
+      const loading = document.getElementById("loadingText");
+      if (loading) loading.style.display = "block";
+
+      setTimeout(function () {
+        window.location.href = "./result.html";
+      }, 700);
+    }
+
+    document.getElementById("drawButton").addEventListener("click", goToResult);
+    document.getElementById("drawButtonBottom").addEventListener("click", goToResult);
+  </script>
 </body>
 </html>
