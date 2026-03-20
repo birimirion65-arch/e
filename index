@@ -1,327 +1,111 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>抽選キャンペーン</title>
-  <meta name="description" content="LINE追加で抽選キャンペーンに参加" />
-  <style>
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic", sans-serif;
-      background:
-        radial-gradient(circle at top left, rgba(34,197,94,.22), transparent 28%),
-        radial-gradient(circle at bottom right, rgba(59,130,246,.18), transparent 25%),
-        linear-gradient(135deg, #0b1220 0%, #111827 100%);
-      color: #fff;
-    }
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>抽選結果発表</title>
+<meta name="robots" content="noindex,nofollow">
 
-    .wrap {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 24px;
-    }
+<style>
+:root{
+  --bg1:#060b1f;
+  --bg2:#0d1f35;
+  --gold:#ffd700;
+  --blue:#60a5fa;
+  --blue2:#3b82f6;
+}
+body{
+  margin:0;
+  font-family:system-ui,-apple-system,"Hiragino Sans","Noto Sans JP";
+  min-height:100vh;
+  display:grid;
+  place-items:center;
+  padding:24px;
+  overflow:hidden;
+  background:
+    radial-gradient(900px 500px at 50% 20%, rgba(255,215,0,.25), transparent 60%),
+    radial-gradient(900px 500px at 80% 80%, rgba(59,130,246,.25), transparent 60%),
+    linear-gradient(180deg,var(--bg1),var(--bg2));
+  color:white;
+}
 
-    .card {
-      width: 100%;
-      max-width: 980px;
-      background: rgba(255,255,255,.08);
-      border: 1px solid rgba(255,255,255,.12);
-      backdrop-filter: blur(14px);
-      border-radius: 28px;
-      box-shadow: 0 24px 80px rgba(0,0,0,.35);
-      overflow: hidden;
-    }
+.card{
+  width:min(760px,95%);
+  padding:60px 24px;
+  border-radius:22px;
+  background:rgba(255,255,255,.06);
+  text-align:center;
+  box-shadow:0 40px 100px rgba(0,0,0,.6);
+}
 
-    .inner {
-      display: grid;
-      grid-template-columns: 1.15fr 0.85fr;
-      gap: 20px;
-      padding: 34px;
-    }
+h1{font-size:32px;margin-bottom:10px;}
+.sub{color:#cbd5e1;margin-bottom:30px;}
 
-    .badge {
-      display: inline-block;
-      padding: 10px 16px;
-      border-radius: 999px;
-      background: rgba(34,197,94,.15);
-      border: 1px solid rgba(34,197,94,.35);
-      color: #bbf7d0;
-      font-size: 12px;
-      font-weight: 800;
-      letter-spacing: .12em;
-    }
+.count{
+  font-size:80px;
+  font-weight:900;
+  color:var(--gold);
+  margin:20px 0;
+  text-shadow:0 0 50px rgba(255,215,0,.9);
+}
 
-    h1 {
-      margin: 18px 0 16px;
-      font-size: clamp(36px, 6vw, 68px);
-      line-height: 1.05;
-      letter-spacing: -.04em;
-    }
+.btn{
+  display:inline-block;
+  padding:18px 40px;
+  border-radius:16px;
+  background:linear-gradient(180deg,var(--blue),var(--blue2));
+  color:white;
+  font-weight:900;
+  text-decoration:none;
+  font-size:18px;
+  box-shadow:0 20px 60px rgba(59,130,246,.5);
+  cursor:pointer;
+}
 
-    .lead {
-      margin: 0 0 24px;
-      font-size: 17px;
-      line-height: 1.9;
-      color: rgba(255,255,255,.86);
-    }
-
-    .accent {
-      color: #86efac;
-      font-weight: 800;
-    }
-
-    .actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 14px;
-      margin-top: 18px;
-    }
-
-    .btn {
-      appearance: none;
-      border: none;
-      cursor: pointer;
-      min-height: 58px;
-      padding: 0 24px;
-      border-radius: 999px;
-      font-size: 16px;
-      font-weight: 800;
-      transition: .2s ease;
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .btn-primary {
-      background: linear-gradient(135deg, #22c55e, #16a34a);
-      color: #fff;
-      box-shadow: 0 18px 36px rgba(34,197,94,.28);
-    }
-
-    .btn-secondary {
-      background: rgba(255,255,255,.07);
-      border: 1px solid rgba(255,255,255,.12);
-      color: #fff;
-    }
-
-    .btn:hover { transform: translateY(-1px); opacity: .96; }
-
-    .note {
-      margin-top: 14px;
-      font-size: 13px;
-      line-height: 1.8;
-      color: rgba(255,255,255,.58);
-    }
-
-    .side {
-      display: grid;
-      gap: 14px;
-    }
-
-    .box {
-      padding: 22px;
-      border-radius: 22px;
-      background: rgba(255,255,255,.05);
-      border: 1px solid rgba(255,255,255,.08);
-    }
-
-    .box h3 {
-      margin: 0 0 10px;
-      font-size: 20px;
-    }
-
-    .box p {
-      margin: 0;
-      font-size: 14px;
-      line-height: 1.8;
-      color: rgba(255,255,255,.74);
-    }
-
-    .section {
-      padding: 0 34px 34px;
-    }
-
-    .flow {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 14px;
-    }
-
-    .step {
-      padding: 22px;
-      border-radius: 22px;
-      background: rgba(255,255,255,.05);
-      border: 1px solid rgba(255,255,255,.08);
-    }
-
-    .step-no {
-      font-size: 12px;
-      font-weight: 800;
-      color: #93c5fd;
-      letter-spacing: .14em;
-      margin-bottom: 10px;
-    }
-
-    .step h4 {
-      margin: 0 0 10px;
-      font-size: 19px;
-    }
-
-    .step p {
-      margin: 0;
-      color: rgba(255,255,255,.74);
-      line-height: 1.8;
-      font-size: 14px;
-    }
-
-    .bottom-cta {
-      margin-top: 26px;
-      padding: 28px;
-      text-align: center;
-      border-radius: 24px;
-      background:
-        linear-gradient(135deg, rgba(34,197,94,.16), rgba(16,185,129,.08)),
-        rgba(255,255,255,.04);
-      border: 1px solid rgba(255,255,255,.08);
-    }
-
-    .bottom-cta h3 {
-      margin: 0 0 10px;
-      font-size: clamp(24px, 4vw, 36px);
-    }
-
-    .bottom-cta p {
-      margin: 0 0 20px;
-      color: rgba(255,255,255,.78);
-      line-height: 1.9;
-    }
-
-    .loading {
-      display: none;
-      margin-top: 16px;
-      font-size: 14px;
-      color: #bbf7d0;
-      font-weight: 700;
-    }
-
-    @media (max-width: 900px) {
-      .inner,
-      .flow {
-        grid-template-columns: 1fr;
-      }
-
-      .actions {
-        flex-direction: column;
-      }
-
-      .btn {
-        width: 100%;
-      }
-
-      .section,
-      .inner {
-        padding: 22px;
-      }
-    }
-  </style>
+.loading{
+  margin-top:20px;
+  font-size:14px;
+  opacity:.7;
+  display:none;
+}
+</style>
 </head>
+
 <body>
-  <div class="wrap">
-    <div class="card">
-      <div class="inner">
-        <div>
-          <span class="badge">LIMITED CAMPAIGN</span>
-          <h1>LINE追加で<br>抽選キャンペーンに参加</h1>
-          <p class="lead">
-            <span class="accent">LINEの友だち追加</span>後、
-            案内に沿って進めるだけで参加できます。
-            下のボタンからそのまま進んでください。
-          </p>
 
-          <div class="actions">
-            <a class="btn btn-primary" href="https://lin.ee/UgmaEbq" target="_blank" rel="noopener noreferrer">
-              LINEで友だち追加する
-            </a>
-            <button class="btn btn-secondary" id="drawButton" type="button">
-              抽選結果を見る
-            </button>
-          </div>
+<div class="card">
+  <h1>抽選結果の発表</h1>
+  <p class="sub">エントリー情報を確認しました。</p>
 
-          <div class="loading" id="loadingText">結果ページへ移動しています...</div>
+  <div class="count" id="count">3</div>
 
-          <div class="note">
-            友だち追加後、必要に応じてLINEトーク内の案内をご確認ください。
-          </div>
-        </div>
+  <a class="btn" id="goBtn">結果を見る</a>
 
-        <div class="side">
-          <div class="box">
-            <h3>簡単3ステップ</h3>
-            <p>友だち追加 → 案内確認 → 結果確認。スマホだけで完結します。</p>
-          </div>
-          <div class="box">
-            <h3>GitHub Pages対応</h3>
-            <p>外部CSSや外部JSなし。HTML2枚だけでそのまま公開できます。</p>
-          </div>
-          <div class="box">
-            <h3>遷移エラーを防止</h3>
-            <p><code>result.html</code> に相対パスで飛ばすので、GitHub Pagesでも動きやすい構成です。</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="section">
-        <div class="flow">
-          <div class="step">
-            <div class="step-no">STEP 01</div>
-            <h4>LINEを追加</h4>
-            <p>上のボタンからLINE追加を行います。</p>
-          </div>
-          <div class="step">
-            <div class="step-no">STEP 02</div>
-            <h4>案内を確認</h4>
-            <p>トーク画面に届く案内や運用情報を確認します。</p>
-          </div>
-          <div class="step">
-            <div class="step-no">STEP 03</div>
-            <h4>結果を確認</h4>
-            <p>このページの「抽選結果を見る」から結果ページへ移動します。</p>
-          </div>
-        </div>
-
-        <div class="bottom-cta">
-          <h3>今すぐ参加する</h3>
-          <p>まずはLINE追加、その後に結果ページを確認してください。</p>
-          <div class="actions" style="justify-content:center;">
-            <a class="btn btn-primary" href="https://lin.ee/UgmaEbq" target="_blank" rel="noopener noreferrer">
-              LINEで友だち追加する
-            </a>
-            <button class="btn btn-secondary" id="drawButtonBottom" type="button">
-              抽選結果を見る
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
+  <div class="loading" id="loading">
+    結果を確認中です...
   </div>
+</div>
 
-  <script>
-    function goToResult() {
-      const loading = document.getElementById("loadingText");
-      if (loading) loading.style.display = "block";
+<script>
+let c=3;
+let el=document.getElementById("count");
 
-      setTimeout(function () {
-        window.location.href = "./result.html";
-      }, 700);
-    }
+let timer=setInterval(()=>{
+  c--;
+  el.textContent=c;
+  if(c<=0){
+    clearInterval(timer);
+    el.textContent="🎉";
+  }
+},1000);
 
-    document.getElementById("drawButton").addEventListener("click", goToResult);
-    document.getElementById("drawButtonBottom").addEventListener("click", goToResult);
-  </script>
+document.getElementById("goBtn").addEventListener("click",()=>{
+  document.getElementById("loading").style.display="block";
+  setTimeout(()=>{
+    window.location.href="win.html";
+  },1200);
+});
+</script>
+
 </body>
 </html>
